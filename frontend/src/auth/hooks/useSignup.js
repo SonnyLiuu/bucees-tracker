@@ -6,28 +6,33 @@ export const useSignup = () => {
   const [msg, setMsg] = useState("");
 
   const signup = async (data) => {
-    setError(null);
+    try {
+      setError("");
+      setMsg("");
 
-    const response = await fetch(`${API_BASE}/api/auth/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    const json = await response.json();
+      const response = await fetch(`${API_BASE}/api/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-    // Server picky about user's input
-    if (response.status && response.status >= 400 && response.status <= 500) {
-      setError(json.message);
-    }
+      const json = await response.json();
 
-    // email verification sent
-    if (response.status === 201) {
-      setMsg(json.message);
-    }
+      console.log("signup payload:", data);
+      console.log("signup status:", response.status);
+      console.log("signup response:", json);
 
-    // email verified and successful signup
-    if (response.status === 200) {
-      setMsg(json.message);
+      if (response.status >= 400 && response.status <= 500) {
+        setError(json.message || "Signup failed");
+        return;
+      }
+
+      if (response.status === 201 || response.status === 200) {
+        setMsg(json.message);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong. Please try again.");
     }
   };
 
