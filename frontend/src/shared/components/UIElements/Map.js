@@ -460,7 +460,7 @@ const Map = (props) => {
               map: map,
               icon: {
                 url: colorlogo,
-                scaledSize: new window.google.maps.Size(50, 50),
+                scaledSize: new window.google.maps.Size(30, 30),
               },
             });
           else
@@ -469,7 +469,7 @@ const Map = (props) => {
               map: map,
               icon: {
                 url: graylogo,
-                scaledSize: new window.google.maps.Size(50, 50),
+                scaledSize: new window.google.maps.Size(30, 30),
               },
             });
         }
@@ -496,7 +496,7 @@ const Map = (props) => {
             map: map,
             icon: {
               url: graylogo,
-              scaledSize: new window.google.maps.Size(50, 50),
+              scaledSize: new window.google.maps.Size(30, 30),
             },
           });
         }
@@ -515,7 +515,7 @@ const Map = (props) => {
           map: newMap,
           icon: {
             url: colorlogo,
-            scaledSize: new window.google.maps.Size(50, 50),
+            scaledSize: new window.google.maps.Size(30, 30),
           },
         });
       }

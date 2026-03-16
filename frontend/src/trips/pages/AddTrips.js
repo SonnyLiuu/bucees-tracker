@@ -3,10 +3,13 @@ import React, { useState } from "react";
 import Button from "../../shared/components/FormElements/Button";
 import { useAddTrips } from "../hooks/useAddTrip";
 import { useAuthContext } from "../../shared/hooks/useAuthContext";
+
+import TripDatePicker from "../components/TripDatePicker";
 import "./AddTrips.css";
 
 const AddTrips = () => {
   const { user } = useAuthContext();
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const [Trip, setTrip] = useState({
     email: user.userData.email,
@@ -31,12 +34,16 @@ const AddTrips = () => {
     await addTrips(Trip);
   };
 
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     if (e.target.id === "products") {
-      setTrip({ ...Trip, [e.target.name]: e.target.checked });
+      setTrip((prev) => ({ ...prev, [e.target.name]: e.target.checked }));
     } else {
-      setTrip({ ...Trip, [e.target.name]: e.target.value });
+      setTrip((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     }
+  };
+
+  const handleDateChange = (date) => {
+    setTrip((prev) => ({ ...prev, date }));
   };
 
   return (
@@ -48,8 +55,6 @@ const AddTrips = () => {
               <label htmlFor="location">Choose a Location: </label>
               <select
                 className="add-trip-location__select"
-                type="text"
-                placeholder="location"
                 name="location"
                 onChange={handleChange}
                 value={Trip.location}
@@ -135,15 +140,16 @@ const AddTrips = () => {
             </div>
 
             <div className="add-trip-date">
-              <label htmlFor="date">Enter Date: </label>
-              <input
-                className="add-trip-date__input"
-                type="text"
-                placeholder="Date"
-                name="date"
-                onChange={handleChange}
+              <label htmlFor="date">Enter Date:</label>
+
+              <TripDatePicker
                 value={Trip.date}
-                required
+                onChange={(date) =>
+                  setTrip((prev) => ({
+                    ...prev,
+                    date: date,
+                  }))
+                }
               />
             </div>
 
@@ -168,7 +174,6 @@ const AddTrips = () => {
                 className="add-trip-checkbox__input"
                 type="checkbox"
                 id="products"
-                placeholder="didGas"
                 name="didGas"
                 onChange={handleChange}
               />
@@ -180,7 +185,6 @@ const AddTrips = () => {
                 className="add-trip-checkbox__input"
                 type="checkbox"
                 id="products"
-                placeholder="didBrisket"
                 name="didBrisket"
                 onChange={handleChange}
               />
@@ -192,7 +196,6 @@ const AddTrips = () => {
                 className="add-trip-checkbox__input"
                 type="checkbox"
                 id="products"
-                placeholder="didDessert"
                 name="didDessert"
                 onChange={handleChange}
               />
@@ -204,7 +207,6 @@ const AddTrips = () => {
                 className="add-trip-checkbox__input"
                 type="checkbox"
                 id="products"
-                placeholder="didHomeGood"
                 name="didHomeGood"
                 onChange={handleChange}
               />
@@ -216,7 +218,6 @@ const AddTrips = () => {
                 className="add-trip-checkbox__input"
                 type="checkbox"
                 id="products"
-                placeholder="didOutdoor"
                 name="didOutdoor"
                 onChange={handleChange}
               />
@@ -228,7 +229,6 @@ const AddTrips = () => {
                 className="add-trip-checkbox__input"
                 type="checkbox"
                 id="products"
-                placeholder="didJerky"
                 name="didJerky"
                 onChange={handleChange}
               />
@@ -240,7 +240,6 @@ const AddTrips = () => {
                 className="add-trip-checkbox__input"
                 type="checkbox"
                 id="products"
-                placeholder="didColdGrab"
                 name="didColdGrab"
                 onChange={handleChange}
               />
@@ -252,7 +251,6 @@ const AddTrips = () => {
                 className="add-trip-checkbox__input"
                 type="checkbox"
                 id="products"
-                placeholder="didHotGrab"
                 name="didHotGrab"
                 onChange={handleChange}
               />
@@ -264,7 +262,6 @@ const AddTrips = () => {
                 className="add-trip-checkbox__input"
                 type="checkbox"
                 id="products"
-                placeholder="did3rdParty"
                 name="did3rdParty"
                 onChange={handleChange}
               />

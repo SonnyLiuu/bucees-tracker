@@ -29,13 +29,37 @@
   color: white;
 }
 
+
 .add-trip-date {
-  padding-top: 15px;
-  background-color: #f8d405;
-  border-radius: 4px;
-  height: 50px;
-  margin-bottom: 70px;
-  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-trip-date__selected {
+  font-weight: 700;
+  color: #c8104f;
+  font-size: 0.9rem;
+}
+
+.add-trip-date__toggle {
+  width: 100%;
+  max-width: 220px;
+  padding: 10px 14px;
+  border: 2px solid #c8104f;
+  border-radius: 12px;
+  background: white;
+  color: #111;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.add-trip-date__picker {
+  margin-top: 8px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #fff6bf;
 }
 
 .add-trip-date__input {
