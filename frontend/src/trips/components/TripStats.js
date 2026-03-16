@@ -3,7 +3,7 @@ import TripItem from "./TripItem";
 import { useAuthContext } from "../../shared/hooks/useAuthContext";
 import Card from "../../shared/components/UIElements/Card";
 import "./TripStats.css";
-import { API_BASE } from "../config/api";
+import { API_BASE } from "../../config/api";
 
 const TripStats = (props) => {
   const [userData, setUserData] = useState(null);

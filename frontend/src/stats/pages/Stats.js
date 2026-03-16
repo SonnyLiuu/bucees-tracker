@@ -6,7 +6,7 @@ import Card from "../../shared/components/UIElements/Card";
 
 import "./Stats.css";
 
-import { API_BASE } from "../config/api";
+import { API_BASE } from "../../config/api";
 
 const locationFields = [
   { name: "Alabama", prefix: "al", total: 4 },

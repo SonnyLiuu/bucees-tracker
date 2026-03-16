@@ -6,7 +6,7 @@ import { useAuthContext } from "../../shared/hooks/useAuthContext";
 import Card from "../../shared/components/UIElements/Card";
 
 import "./Trips.css";
-import { API_BASE } from "../config/api";
+import { API_BASE } from "../../config/api";
 
 const Trips = () => {
   const [trips, setTrips] = useState([]);

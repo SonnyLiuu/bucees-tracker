@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../shared/hooks/useAuthContext";
-import { API_BASE } from "../config/api";
+import { API_BASE } from "../../config/api";
 
 export const useLogin = () => {
   const [error, setError] = useState("");
