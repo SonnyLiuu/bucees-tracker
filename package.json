@@ -2,7 +2,7 @@
   "name": "cop4331-g13",
   "version": "1.0.0",
   "engines": {
-    "node": "18.16.1"
+    "node": "24.x"
   },
   "scripts": {
     "start": "nodemon server.js",
