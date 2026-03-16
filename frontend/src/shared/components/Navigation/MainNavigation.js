@@ -38,7 +38,7 @@ const MainNavigation = (props) => {
           <span />
         </button>
         <img className="main-navigation__logo" src={logo} alt="logo" />
-        <h1 className="main-navigation__title">Bucees Tracker</h1>
+        <h1 className="main-navigation__title">Bucee's Tracker</h1>
         <nav className="main-navigation__header-nav">
           <NavLinks />
         </nav>
