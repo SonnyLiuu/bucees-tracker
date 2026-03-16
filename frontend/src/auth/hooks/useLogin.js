@@ -21,7 +21,7 @@ export const useLogin = () => {
     if (response.status && response.status >= 400 && response.status <= 500) {
       setError(json.message);
     }
-    if (response.status == 200) {
+    if (response.status === 200) {
       // store user in localStorage
       localStorage.setItem("user", JSON.stringify(json));
 

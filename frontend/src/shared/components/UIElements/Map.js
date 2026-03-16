@@ -4,7 +4,7 @@ import "./Map.css";
 
 const Map = (props) => {
   const mapRef = useRef(null);
-  const { latitude, longitude, zoom, userData, Trips } = props;
+  const { latitude, longitude, zoom, Trips } = props;
   let multipleMarkers = props.multipleMarkers;
 
   useEffect(() => {
@@ -454,7 +454,7 @@ const Map = (props) => {
               break;
             }
           }
-          if (visitedFlag == true)
+          if (visitedFlag === true)
             new window.google.maps.Marker({
               position: { lat: coords[i].lat, lng: coords[i].lng },
               map: map,
