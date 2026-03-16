@@ -3,38 +3,43 @@ require("dotenv").config();
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const authenticateRoutes = require("./routes/authenticate");
 const tripRoutes = require("./routes/trip");
 const userRoutes = require("./routes/user");
 
-// express app
 const app = express();
 
-// middleware
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://bucees-buddy.vercel.app/"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
-// routes
 app.use("/api", authenticateRoutes);
 app.use("/api/trips", tripRoutes);
 app.use("/api/user", userRoutes);
 
-app.use(express.static(path.join(__dirname + "/frontend/build")));
-
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("frontend/build"));
+  app.use(express.static(path.join(__dirname, "frontend/build")));
+
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
   });
 }
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 
-//This is where mongoose connects to MongoDB
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
-    console.log("connected to the db and listening on port", process.env.PORT);
+    app.listen(port, "0.0.0.0", () => {
+      console.log("connected to the db and listening on port", port);
+    });
   })
   .catch((error) => {
     console.log("Could not connect to database!");

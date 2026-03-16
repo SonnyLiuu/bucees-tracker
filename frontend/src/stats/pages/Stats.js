@@ -6,6 +6,8 @@ import Card from "../../shared/components/UIElements/Card";
 
 import "./Stats.css";
 
+import { API_BASE } from "../config/api";
+
 const locationFields = [
   { name: "Alabama", prefix: "al", total: 4 },
   { name: "Florida", prefix: "fl", total: 2 },
@@ -161,8 +163,8 @@ const Stats = () => {
     const fetchData = async () => {
       try {
         const [userRes, tripsRes] = await Promise.all([
-          fetch(`/api/user/${email}`),
-          fetch(`/api/trips/${email}`, {
+          fetch(`${API_BASE}/api/user/${email}`),
+          fetch(`${API_BASE}/api/trips/${email}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
           }),

@@ -6,6 +6,7 @@ import { useAuthContext } from "../../shared/hooks/useAuthContext";
 import Card from "../../shared/components/UIElements/Card";
 
 import "./Trips.css";
+import { API_BASE } from "../config/api";
 
 const Trips = () => {
   const [trips, setTrips] = useState([]);
@@ -17,7 +18,7 @@ const Trips = () => {
 
     const fetchTrips = async () => {
       try {
-        const response = await fetch(`/api/trips/${email}`, {
+        const response = await fetch(`${API_BASE}/api/trips/${email}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
