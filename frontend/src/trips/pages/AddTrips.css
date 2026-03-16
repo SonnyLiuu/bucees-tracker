@@ -1,64 +1,74 @@
-.trip-form 
-{
+.add-trip-form {
   position: relative;
   list-style: none;
-  margin: 0 auto;
-  margin-block-start: 2.5%;
   padding: 1rem;
-  width: 90%;
-  max-width: 40rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  border-radius: 6px;
-  background: white;
-  margin-block-start: 4.5%;
+  width: 100%;
+  margin: 0;
+  max-width: none;
+
+  /* remove card styling */
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
 }
 
-.locationDiv
-{
-  background-color: #F8D405;
+.add-trip-location {
+  background-color: #f8d405;
   border-radius: 4px;
   height: 60px;
   margin-bottom: 70px;
   font-weight: bold;
 }
 
-.locationSelector{
+.add-trip-location__select {
   margin-bottom: 100px;
-  background-color: #B3173F;
+  background-color: #b3173f;
   padding: 2px;
   border-radius: 4px;
   font-weight: bold;
   color: white;
 }
 
-.dateDiv
-{
+.add-trip-date {
   padding-top: 15px;
-  background-color: #F8D405;
+  background-color: #f8d405;
   border-radius: 4px;
   height: 50px;
   margin-bottom: 70px;
   font-weight: bold;
 }
 
-.dateSelector{
+.add-trip-date__input {
   margin-bottom: 100px;
 }
 
-.grid-container {
+.add-trip-total {
+  padding-top: 15px;
+  background-color: #f8d405;
+  border-radius: 4px;
+  height: 50px;
+  margin-bottom: 70px;
+  font-weight: bold;
+}
+
+.add-trip-total__input {
+  margin-bottom: 100px;
+}
+
+.add-trip-grid {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
 }
 
-.grid-child{
-  text-align:center;
+.add-trip-grid__left,
+.add-trip-grid__right {
+  text-align: center;
 }
 
-.checkBoxDiv
-{
-  background-color: #F8D405;
+.add-trip-checkbox {
+  background-color: #f8d405;
   padding: 2px;
   border-radius: 4px;
   width: 60%;
@@ -68,28 +78,30 @@
   font-weight: bold;
 }
 
-.centerAddButton
-{
-  margin: 0;
-   
-  position: relative;
-  margin-left: 230px;
+.add-trip-checkbox__input {
 }
 
-.error_msg,
-.success_msg {
-	width: 370px;
-	padding: 15px;
+.add-trip-submit {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.add-trip-message {
+  width: 370px;
+  padding: 15px;
   margin-block-start: 1%;
   margin-inline-start: 40%;
-	font-size: 14px;
-	background-color: #f34646;
-	color: white;
-	border-radius: 5px;
-	text-align: center;
+  font-size: 14px;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
 }
 
-.success_msg {
-  
-	background-color: #57b457;
+.add-trip-message--error {
+  background-color: #f34646;
+}
+
+.add-trip-message--success {
+  background-color: #57b457;
 }

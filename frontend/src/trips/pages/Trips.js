@@ -1,74 +1,95 @@
-import React, { useEffect, useState } from 'react';
-import TripItem from '../components/TripItem';
+import React, { useEffect, useState } from "react";
+import TripItem from "../components/TripItem";
+import AddTrips from "./AddTrips";
 
-import { useAuthContext } from '../../shared/hooks/useAuthContext';
-import Card from '../../shared/components/UIElements/Card';
-import TripStats from '../components/TripStats';
+import { useAuthContext } from "../../shared/hooks/useAuthContext";
+import Card from "../../shared/components/UIElements/Card";
 
-import './Trips.css';
+import "./Trips.css";
 
 const Trips = () => {
-  const [userData, setUserData] = useState(null);
-  const [Trips, setTrips] = useState(null);
+  const [trips, setTrips] = useState([]);
   const { user } = useAuthContext();
-  
+
   useEffect(() => {
-  const fetchTrips = async () => {
-    const response = await fetch(`/api/trips/${user.userData.email}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const email = user?.userData?.email;
+    if (!email) return;
 
-    const json = await response.json();
+    const fetchTrips = async () => {
+      try {
+        const response = await fetch(`/api/trips/${email}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
 
-    if (response.status===200) {
-      setTrips(json.data);
-    }
-  };
-  fetchTrips();
-}, []);
+        const json = await response.json();
 
-  
-     return (
-      <React.Fragment>
-        <div>
-          <div className="trips-list-container">
-            <ul className="trips-list">
-              <div className="list-item">
-                {Trips && Trips.map(trip => (
-                  <TripItem
-                    class = "trip"
-                    key={trip._id}
-                    id={trip._id}
-                    date={trip.date}
-                    latitude={trip.latitude}
-                    longitude={trip.longitude}
-                    location={trip.location}
-                    total={trip.total}
-                    didGas={trip.didGas}
-                    didBrisket={trip.didBrisket}
-                    didDessert={trip.didDessert}
-                    didHomeGood={trip.didHomeGood}
-                    didOutdoor={trip.didOutdoor}
-                    didJerky={trip.didJerky}
-                    didColdGrab={trip.didColdGrab}
-                    didHotGrab={trip.didHotGrab}
-                    did3rdParty={trip.did3rdParty}
-                  />
+        if (response.ok) {
+          setTrips(json.data || []);
+        }
+      } catch (err) {
+        console.error("Failed to fetch trips:", err);
+      }
+    };
+
+    fetchTrips();
+  }, [user]);
+
+  return (
+    <main className="trips-page">
+      <section className="trips-page__layout">
+        <section className="trips-page__history" aria-label="Trip history">
+          <Card className="trips-page__history-card">
+            <header className="trips-page__header">
+              <h1 className="trips-page__title">Trip History</h1>
+              <p className="trips-page__subtitle">{trips.length} total trips</p>
+            </header>
+
+            {trips.length > 0 ? (
+              <ul className="trips-page__list">
+                {trips.map((trip) => (
+                  <li key={trip._id} className="trips-page__list-item">
+                    <TripItem
+                      className="trip"
+                      id={trip._id}
+                      date={trip.date}
+                      latitude={trip.latitude}
+                      longitude={trip.longitude}
+                      location={trip.location}
+                      total={trip.total}
+                      didGas={trip.didGas}
+                      didBrisket={trip.didBrisket}
+                      didDessert={trip.didDessert}
+                      didHomeGood={trip.didHomeGood}
+                      didOutdoor={trip.didOutdoor}
+                      didJerky={trip.didJerky}
+                      didColdGrab={trip.didColdGrab}
+                      didHotGrab={trip.didHotGrab}
+                      did3rdParty={trip.did3rdParty}
+                    />
+                  </li>
                 ))}
+              </ul>
+            ) : (
+              <div className="trips-page__empty">
+                <h3>No trips yet</h3>
+                <p>Add your first Buc-ee’s stop on the right.</p>
               </div>
-            </ul>
-            <TripStats />
-          </div>
-        </div>
-      </React.Fragment>
-    )
-}
+            )}
+          </Card>
+        </section>
+
+        <aside className="trips-page__add" aria-label="Add trip">
+          <Card className="trips-page__add-card">
+            <header className="trips-page__header">
+              <h2 className="trips-page__title">Add Trip</h2>
+            </header>
+            <AddTrips />
+          </Card>
+        </aside>
+      </section>
+    </main>
+  );
+};
 
 export default Trips;
-
-/*
-<h4>Most Popular Location:   {userData.most_visited_location} ({userData.most_visited_location_trips} trips) (${userData.most_visited_location_spent}) </h4>
-<h4>Highest-Spent Location:   {userData.most_spent_location} (${userData.most_spent_location_spent}) ({userData.most_spent_location_trips} trips) </h4>
-<h4>Most Popular Item:   {userData.most_item_category} ({userData.most_item_category_count} trips) </h4> */
-

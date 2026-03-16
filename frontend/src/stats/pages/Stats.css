@@ -1,50 +1,137 @@
 body {
-  /* background color to the website */
-  background-image: url('https://cdn.discordapp.com/attachments/1125893813727154317/1133594307669004318/bb_background4.png');
+  background-image: url("https://cdn.discordapp.com/attachments/1125893813727154317/1133594307669004318/bb_background4.png");
 }
 
-.stat-page{
-  margin-block-start: 4.5%;
-}
-.product-stats-content__card
-{
-  margin-block-start: 2%;
-  margin-bottom: 2%;
-}
-.welcome-user{
-  color:white;
+.stats-page {
+  padding: 18px;
 }
 
-.map-container{
-height: 100%;
+.stats-page__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 19px;
 }
 
-.side-by-side 
-{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: -40px; /* Optional: Add some space between each side-by-side section */
+.stats-page__grid--top {
+  min-height: 430px;
 }
 
-.ProductsHeader
-{
-  margin-bottom: -13px;
-  background-color: #F8D405;
-  justify-content: center;
+.stats-page__grid--bottom {
+  margin-top: 20px;
 }
 
-.WelcomeHeader
-{
-  margin-top: 50px;
+.stats-page__map-card,
+.stats-page__overview-card,
+.stats-page__state-card,
+.stats-page__products-card {
+  height: 100%;
+  padding: 1rem;
 }
 
-.Product-by-side
-{
-  margin-bottom: -40px;
+.stats-page__map-card {
+  padding: 0;
+  overflow: hidden;
 }
 
-.Products-container
-{
+.stats-page__map-shell,
+.stats-page__map-view {
+  height: 100%;
+}
+
+.stats-page__card-title {
+  margin: 0 0 1rem;
   text-align: center;
+}
+
+.stats-page__overview-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-page__overview-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+}
+
+.stats-page__overview-item {
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+.stats-page__overview-label {
+  margin: 0 0 0.25rem;
+}
+
+.stats-page__overview-value {
+  margin: 0;
+  font-weight: 700;
+}
+
+.stats-page__overview-subtext {
+  margin: 0.2rem 0 0;
+}
+
+.stats-page__state-table {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.stats-page__state-table-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 0.8fr 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.stats-page__state-table-row span {
+  text-align: center;
+}
+
+.stats-page__state-table-row--header {
+  font-weight: 700;
+}
+
+.stats-page__state-total {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-weight: 700;
+}
+
+.stats-page__products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 0;
+}
+
+.stats-page__product-item {
+  text-align: center;
+}
+
+.stats-page__product-label {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.stats-page__product-value {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .stats-page__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-page__grid--top {
+    min-height: auto;
+  }
+
+  .stats-page__state-table-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stats-page__products-grid {
+    grid-template-columns: 1fr;
+  }
 }

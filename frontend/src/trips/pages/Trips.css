@@ -1,40 +1,53 @@
-.trips-list-container 
-{
-  margin-top: 50px;
-  display: flex;
+.trips-page {
+  padding: 18px;
+}
+
+.trips-page__layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.trips-page__history-card,
+.trips-page__add-card {
+  padding: 1rem;
+}
+
+.trips-page__header {
   text-align: center;
+  margin-bottom: 1rem;
 }
 
-.trips-list
-{
-  flex: 1;
-  padding-right: 10px;
+.trips-page__title {
+  margin: 0;
 }
 
-.side-by-side 
-{
+.trips-page__subtitle {
+  margin: 0.35rem 0 0;
+}
+
+.trips-page__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin-bottom: -18px; /* Optional: Add some space between each side-by-side section */
-  margin-block-start: 4.5%;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.list-item{
-  border-radius: 4px;
-  margin-bottom: 70px;
-  font-weight: bold;
-  border-radius: 4px;
-  width: 800px;
-  margin-bottom: 70px;
-  font-weight: bold;
-  flex: 1;
+.trips-page__list-item {
+  margin: 0;
+  padding: 0;
 }
 
-/* I moved your code into TripStats.css */
-/* I moved your code into TripStats.css */
-/* I moved your code into TripStats.css */
-/* I moved your code into TripStats.css */
-/* I moved your code into TripStats.css */
-/* I moved your code into TripStats.css */
+.trips-page__empty {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+@media (max-width: 1000px) {
+  .trips-page__layout {
+    grid-template-columns: 1fr;
+  }
+}
