@@ -16,7 +16,7 @@ const ResetPassword = () => {
     e.preventDefault();
 
     try {
-      const url = `/api/${param.id}/reset/${param.token}`;
+      const url = `/api/auth/${param.id}/reset/${param.token}`;
       const { data } = await axios.patch(url, {"password": password});
       setError("");
       setMsg(data.message);

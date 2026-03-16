@@ -32,7 +32,7 @@ app.use(
 
 app.use(express.json());
 
-app.use("/api", authenticateRoutes);
+app.use("/api/auth", authenticateRoutes);
 app.use("/api/trips", tripRoutes);
 app.use("/api/user", userRoutes);
 

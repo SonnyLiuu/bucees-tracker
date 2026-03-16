@@ -5,11 +5,89 @@ const bcrypt = require("bcrypt");
 const sendEmail = require("../util/sendEmailAPI");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const createToken = (_id) => {
   return jwt.sign({ _id: _id }, process.env.JWTPRIVATEKEY, { expiresIn: "3d" });
 };
 
+// login through google
+const googleLogin = async (req, res) => {
+  try {
+    const { credential } = req.body;
+
+    if (!credential) {
+      return res.status(400).send({ message: "Missing Google credential" });
+    }
+
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    const email = payload.email;
+    const fullName = payload.name || "";
+    const googleId = payload.sub;
+    const picture = payload.picture || "";
+    const emailVerified = payload.email_verified;
+
+    if (!email || !emailVerified) {
+      return res
+        .status(400)
+        .send({ message: "Google account email is not verified" });
+    }
+
+    const nameParts = fullName.trim().split(" ");
+    const firstName = nameParts[0] || "";
+    const lastName = nameParts.slice(1).join(" ") || "";
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await new User({
+        firstName,
+        lastName,
+        email,
+        password: null,
+        verified: true,
+        googleId,
+        picture,
+        authProvider: "google",
+      }).save();
+    } else {
+      if (!user.googleId) user.googleId = googleId;
+      if (!user.picture) user.picture = picture;
+      if (!user.firstName) user.firstName = firstName;
+      if (!user.lastName) user.lastName = lastName;
+      user.verified = true;
+      user.authProvider = "google";
+
+      await user.save();
+    }
+
+    const userData = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      picture: user.picture,
+    };
+
+    const token = createToken(user._id);
+
+    return res.status(200).send({
+      userData,
+      token,
+      message: "Login Successful!",
+    });
+  } catch (error) {
+    console.log("Google login error:", error);
+    return res.status(500).send({ message: "Google login failed" });
+  }
+};
 // post a registration
 const registerAuth = async (req, res) => {
   try {
@@ -79,10 +157,18 @@ const loginAuth = async (req, res) => {
 
     if (!user) return res.status(401).send({ message: "Invalid Email!" });
 
+    if (!user.password) {
+      return res.status(401).send({
+        message:
+          "This account uses Google sign-in. Please continue with Google.",
+      });
+    }
+
     const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
+
     if (!validPassword)
       return res.status(401).send({ message: "Invalid Password!" });
 
@@ -94,6 +180,7 @@ const loginAuth = async (req, res) => {
           token: crypto.randomBytes(5).toString("hex"),
         }).save();
       }
+
       const url = `${process.env.BASE_URL}users/${user._id}/verify/${token.token}`;
       await sendEmail(user.email, "Verify your email bucco!", url);
 
@@ -102,6 +189,7 @@ const loginAuth = async (req, res) => {
           "Another email has been sent, please verify your account before signing in.",
       });
     }
+
     const userData = await User.findOne(
       { email: req.body.email },
       {
@@ -109,13 +197,17 @@ const loginAuth = async (req, res) => {
         firstName: 1,
         lastName: 1,
         email: 1,
+        picture: 1,
       }
     );
 
     const token = createToken(user._id);
-    res
-      .status(200)
-      .send({ userData: userData, token: token, message: "Login Successful!" });
+
+    res.status(200).send({
+      userData,
+      token,
+      message: "Login Successful!",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Internal Server Error" });
@@ -216,4 +308,5 @@ module.exports = {
   registerAuth,
   emailVerify,
   updatePasswordAuth,
+  googleLogin,
 };

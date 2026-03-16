@@ -1,14 +1,18 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { AuthContextProvider } from "./shared/context/AuthContext"
+import { AuthContextProvider } from "./shared/context/AuthContext";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
-ReactDOM.render(
-	<React.StrictMode>
-		<AuthContextProvider>
-			<App />
-		</AuthContextProvider>
-	</React.StrictMode>,
-	document.getElementById("root")
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(
+  <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+    <React.StrictMode>
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
+    </React.StrictMode>
+  </GoogleOAuthProvider>
 );

@@ -4,11 +4,15 @@ const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 
 const userSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
+  firstName: { type: String, default: "" },
+  lastName: { type: String, default: "" },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, default: null },
   verified: { type: Boolean, default: false },
+
+  googleId: { type: String, default: null },
+  picture: { type: String, default: "" },
+  authProvider: { type: String, default: "local" },
 
   total_trips: { type: Number, default: 0 },
   total_spent: { type: Number, default: 0 },

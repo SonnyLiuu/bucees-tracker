@@ -1,13 +1,16 @@
-const express = require('express');
+const express = require("express");
 const {
   forgotAuth,
   loginAuth,
   registerAuth,
   emailVerify,
   updatePasswordAuth,
-} = require('../controllers/authenticateController')
+  googleLogin,
+} = require("../controllers/authenticateController");
 
 const router = express.Router();
+
+router.post("/google", googleLogin);
 
 // POST a registration
 router.post("/register", registerAuth);

@@ -11,7 +11,7 @@ const ForgotPassword = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "/api/forgot";
+			const url = "/api/auth/forgot";
 			const { data } = await axios.post(url, {"email": email});
 			setError("");
 			setMsg(data.message);

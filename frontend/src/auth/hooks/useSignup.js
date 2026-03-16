@@ -8,7 +8,7 @@ export const useSignup = () => {
   const signup = async (data) => {
     setError(null);
 
-    const response = await fetch(`${API_BASE}/api/register`, {
+    const response = await fetch(`${API_BASE}/api/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -21,12 +21,12 @@ export const useSignup = () => {
     }
 
     // email verification sent
-    if (response.status == 201) {
+    if (response.status === 201) {
       setMsg(json.message);
     }
 
     // email verified and successful signup
-    if (response.status == 200) {
+    if (response.status === 200) {
       setMsg(json.message);
     }
   };

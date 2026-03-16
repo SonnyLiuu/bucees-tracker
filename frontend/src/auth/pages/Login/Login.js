@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { GoogleLogin } from "@react-oauth/google";
 import { useLogin } from "../../hooks/useLogin";
-
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
+import { API_BASE } from "../../../config/api";
 
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
@@ -10,8 +11,34 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     await login(data);
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      console.log("API_BASE =", API_BASE);
+      const response = await fetch(`${API_BASE}/api/auth/google`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          credential: credentialResponse.credential,
+        }),
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error(json.message || "Google login failed");
+      }
+
+      localStorage.setItem("user", JSON.stringify(json));
+      window.location.href = "/";
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
   };
 
   return (
@@ -45,6 +72,14 @@ const Login = () => {
             <Link to="/forgotpassword" className={styles.forgot_password_link}>
               Forgot Password?
             </Link>
+            <div style={{ marginTop: "16px" }}>
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => {
+                  alert("Google login failed");
+                }}
+              />
+            </div>
           </form>
         </div>
         <div className={styles.right}>
