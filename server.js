@@ -11,9 +11,21 @@ const userRoutes = require("./routes/user");
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://bucees-tracker.vercel.app",
+];
+
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://bucees-tracker.vercel.app/"],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
