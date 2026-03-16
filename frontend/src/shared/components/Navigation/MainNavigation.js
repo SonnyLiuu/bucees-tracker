@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-import MainHeader from './MainHeader';
-import NavLinks from './NavLinks';
-import SideDrawer from './SideDrawer';
-import Backdrop from '../UIElements/Backdrop';
-import './MainNavigation.css';
+import MainHeader from "./MainHeader";
+import NavLinks from "./NavLinks";
+import SideDrawer from "./SideDrawer";
+import Backdrop from "../UIElements/Backdrop";
+import "./MainNavigation.css";
 
-import logo from '../../images/bucees-logo.png';
+import logo from "../../images/bucees-logo.png";
 
-
-const MainNavigation = props => {
+const MainNavigation = (props) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
-
 
   const openDrawerHandler = () => {
     setDrawerIsOpen(true);
@@ -32,15 +30,16 @@ const MainNavigation = props => {
       </SideDrawer>
 
       <MainHeader>
-        <button className="main-navigation__menu-btn" onClick={openDrawerHandler}>
+        <button
+          className="main-navigation__menu-btn"
+          onClick={openDrawerHandler}
+        >
           <span />
           <span />
           <span />
         </button>
-        <img className="main-navigation__logo" src={logo} alt="logo"/>
-        <h1 className="main-navigation__title">
-          Bucees Buddy
-        </h1>
+        <img className="main-navigation__logo" src={logo} alt="logo" />
+        <h1 className="main-navigation__title">Bucees Tracker</h1>
         <nav className="main-navigation__header-nav">
           <NavLinks />
         </nav>

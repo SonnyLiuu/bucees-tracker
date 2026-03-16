@@ -4,15 +4,13 @@ import { useLogin } from "../../hooks/useLogin";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 
-
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
   const { login, error } = useLogin();
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     await login(data);
   };
 
@@ -21,12 +19,12 @@ const Login = () => {
       <div className={styles.login_form_container}>
         <div className={styles.left}>
           <form className={styles.form_container} onSubmit={handleSubmit}>
-            <h1>Welcome to Bucees Buddy!</h1>
+            <h1>Welcome to Bucees Tracker!</h1>
             <input
               type="email"
               placeholder="Email"
               name="email"
-              onChange={(e)=>setData({...data, ["email"]: e.target.value})}
+              onChange={(e) => setData({ ...data, ["email"]: e.target.value })}
               value={data.email}
               required
               className={styles.input}
@@ -35,7 +33,9 @@ const Login = () => {
               type="password"
               placeholder="Password"
               name="password"
-              onChange={(e)=>setData({...data, ["password"]: e.target.value})}
+              onChange={(e) =>
+                setData({ ...data, ["password"]: e.target.value })
+              }
               value={data.password}
               required
               className={styles.input}
@@ -56,7 +56,9 @@ const Login = () => {
               Sign Up
             </button>
           </Link>
-          <div className={styles.disclaimer}>Disclaimer: This is not an official Bucee's companion app.</div>
+          <div className={styles.disclaimer}>
+            Disclaimer: This is not an official Bucee's companion app.
+          </div>
         </div>
       </div>
     </div>

@@ -157,7 +157,7 @@ const forgotAuth = async (req, res) => {
 
     const url = `${process.env.BASE_URL}users/${user._id}/reset-password/${token.token}`;
 
-    await sendEmail(user.email, "Reset that password buddy!", url);
+    await sendEmail(user.email, "Reset that password!", url);
 
     res.status(201).send({ message: "Password change link sent!" });
   } catch (error) {

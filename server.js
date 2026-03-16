@@ -13,7 +13,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://bucees-buddy.vercel.app/"],
+    origin: ["http://localhost:3000", "https://bucees-tracker.vercel.app/"],
     credentials: true,
   })
 );
