@@ -1,0 +1,360 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap");
+
+.page {
+  --auth-ink: #112035;
+  --auth-muted: #5c6c80;
+  --auth-border: rgba(17, 32, 53, 0.09);
+  --auth-accent: #b3173f;
+  background:
+    radial-gradient(circle at top left, rgba(244, 201, 66, 0.16), transparent 26rem),
+    radial-gradient(circle at top right, rgba(179, 23, 63, 0.12), transparent 28rem),
+    linear-gradient(180deg, #fff9f2 0%, #ffffff 34%, #fffaf5 100%);
+  color: var(--auth-ink);
+  min-height: 100vh;
+  padding: 3rem 1.25rem;
+}
+
+.pageInner {
+  margin: 0 auto;
+  max-width: 64rem;
+}
+
+.toggleWrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.toggleRail {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(17, 32, 53, 0.08);
+  border-radius: 999px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 0.35rem;
+  position: relative;
+  width: min(100%, 24rem);
+}
+
+.toggleThumb {
+  background: rgba(179, 23, 63, 0.1);
+  border-radius: 999px;
+  bottom: 0.35rem;
+  position: absolute;
+  top: 0.35rem;
+  transition: transform 220ms ease;
+  width: calc(50% - 0.35rem);
+}
+
+.toggleThumbLogin {
+  left: 0.35rem;
+  transform: translateX(0);
+}
+
+.toggleThumbSignup {
+  left: 0.35rem;
+  transform: translateX(100%);
+}
+
+.toggleOption {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--auth-muted);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "Space Grotesk", "Open Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  justify-content: center;
+  min-height: 3rem;
+  position: relative;
+  text-decoration: none;
+  z-index: 1;
+}
+
+.toggleOption:hover {
+  color: var(--auth-ink);
+}
+
+.toggleOption:focus-visible,
+.submitButton:focus-visible,
+.secondaryLink:focus-visible,
+.input:focus-visible {
+  outline: 3px solid rgba(179, 23, 63, 0.18);
+  outline-offset: 3px;
+}
+
+.toggleOptionActive,
+.toggleOption[aria-selected="true"] {
+  color: var(--auth-accent);
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid var(--auth-border);
+  border-radius: 2rem;
+  box-shadow: 0 24px 70px rgba(17, 32, 53, 0.08);
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  overflow: hidden;
+}
+
+.brandPanel {
+  background: #ffffff;
+  border-right: 1px solid rgba(17, 32, 53, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 38rem;
+  padding: 3rem;
+}
+
+.brandStage,
+.formStage {
+  animation: authStageEnter 240ms ease;
+}
+
+.eyebrow,
+.brandTitle,
+.brandMeta {
+  font-family: "Space Grotesk", "Open Sans", sans-serif;
+}
+
+.eyebrow {
+  color: var(--auth-accent);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0 0 1rem;
+  text-transform: uppercase;
+}
+
+.brandTitle {
+  font-size: clamp(2.4rem, 4vw, 3.7rem);
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+  margin: 0;
+}
+
+.brandCopy {
+  color: var(--auth-muted);
+  font-size: 1.04rem;
+  line-height: 1.75;
+  margin: 1.4rem 0 0;
+  max-width: 22rem;
+  text-wrap: pretty;
+}
+
+.brandMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.5rem;
+}
+
+.brandMeta span {
+  background: rgba(17, 32, 53, 0.05);
+  border-radius: 999px;
+  color: var(--auth-ink);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.55rem 0.85rem;
+}
+
+.formPanel {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 38rem;
+  padding: 3rem;
+}
+
+.formStage {
+  width: 100%;
+}
+
+.formHeader {
+  margin-bottom: 1.5rem;
+}
+
+.formHeader h2 {
+  font-family: "Space Grotesk", "Open Sans", sans-serif;
+  font-size: 2rem;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  margin: 0;
+}
+
+.formHeader p {
+  color: var(--auth-muted);
+  line-height: 1.6;
+  margin: 0.8rem 0 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.fieldGrid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fieldLabel {
+  color: var(--auth-ink);
+  font-family: "Space Grotesk", "Open Sans", sans-serif;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.input {
+  background: #f7f4ef;
+  border: 1px solid rgba(17, 32, 53, 0.08);
+  border-radius: 1rem;
+  color: var(--auth-ink);
+  font-size: 0.98rem;
+  min-height: 3.35rem;
+  outline: none;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.input::placeholder {
+  color: rgba(92, 108, 128, 0.86);
+}
+
+.input:focus {
+  border-color: rgba(179, 23, 63, 0.28);
+  box-shadow: 0 0 0 4px rgba(179, 23, 63, 0.08);
+}
+
+.messageError,
+.messageSuccess {
+  border-radius: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  padding: 0.85rem 1rem;
+}
+
+.messageError {
+  background: #fde9e9;
+  color: #a12323;
+}
+
+.messageSuccess {
+  background: #eaf7ea;
+  color: #226b35;
+}
+
+.submitButton {
+  background: var(--auth-accent);
+  border: none;
+  border-radius: 999px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: "Space Grotesk", "Open Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  min-height: 3.25rem;
+  padding: 0 1.25rem;
+}
+
+.submitButton:hover {
+  background: #8f1233;
+  box-shadow: 0 12px 24px rgba(179, 23, 63, 0.12);
+  transform: translateY(-1px);
+}
+
+.secondaryLink {
+  color: var(--auth-ink);
+  font-family: "Space Grotesk", "Open Sans", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.secondaryLink:hover {
+  color: var(--auth-accent);
+}
+
+.googleWrap {
+  margin-top: 0.35rem;
+}
+
+@keyframes authStageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 840px) {
+  .page {
+    padding: 2rem 1rem;
+  }
+
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  .brandStage,
+  .formStage {
+    animation: none;
+  }
+
+  .brandPanel,
+  .formPanel {
+    min-height: auto;
+    padding: 2rem 1.4rem;
+  }
+
+  .brandPanel {
+    border-right: none;
+    border-bottom: 1px solid rgba(17, 32, 53, 0.08);
+  }
+}
+
+@media (max-width: 560px) {
+  .fieldGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .toggleRail {
+    width: 100%;
+  }
+
+  .brandTitle {
+    font-size: 2.3rem;
+  }
+
+  .formHeader h2 {
+    font-size: 1.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggleThumb,
+  .brandStage,
+  .formStage,
+  .submitButton {
+    animation: none;
+    transition: none;
+  }
+}

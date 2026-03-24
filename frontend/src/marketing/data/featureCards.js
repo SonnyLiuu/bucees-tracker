@@ -15,7 +15,7 @@ export const featureCards = [
   },
   {
     badge: "03",
-    title: "Track Spend",
+    title: "Track Spending",
     description:
       "Keep a running view of trip totals, favorite stops, and where most of your Bucee's budget actually goes.",
     accentClass: "landing-page__feature-badge--coral",
@@ -36,7 +36,7 @@ export const featureCards = [
   },
   {
     badge: "06",
-    title: "Keep History Clean",
+    title: "Keep Your History Clean",
     description:
       "Use one simple trip log instead of scattered notes, photos, and receipts spread across your phone and inbox.",
     accentClass: "landing-page__feature-badge--slate",
