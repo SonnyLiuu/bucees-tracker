@@ -4,36 +4,30 @@ import AddTrips from "./AddTrips";
 
 import { useAuthContext } from "../../shared/hooks/useAuthContext";
 import Card from "../../shared/components/UIElements/Card";
+import apiClient, { getAuthConfig } from "../../config/apiClient";
+import { subscribeToTripsChanged } from "../utils/tripEvents";
 
 import "./Trips.css";
-import { API_BASE } from "../../config/api";
 
 const Trips = () => {
   const [trips, setTrips] = useState([]);
   const { user } = useAuthContext();
 
   useEffect(() => {
-    const email = user?.userData?.email;
-    if (!email) return;
+    if (!user?.token) return;
 
     const fetchTrips = async () => {
       try {
-        const response = await fetch(`${API_BASE}/api/trips/${email}`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const json = await response.json();
-
-        if (response.ok) {
-          setTrips(json.data || []);
-        }
+        const response = await apiClient.get("/api/trips", getAuthConfig(user));
+        setTrips(response.data.data || []);
       } catch (err) {
         console.error("Failed to fetch trips:", err);
       }
     };
 
     fetchTrips();
+
+    return subscribeToTripsChanged(fetchTrips);
   }, [user]);
 
   return (

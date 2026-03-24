@@ -1,0 +1,370 @@
+[
+  {
+    "storeId": 1,
+    "storeNumber": "#1",
+    "name": "#1 Lake Jackson, TX (899 Oyster Creek)",
+    "stateCode": "TX",
+    "lat": 29.04064,
+    "lng": -95.413231
+  },
+  {
+    "storeId": 2,
+    "storeNumber": "#2",
+    "name": "#2 Lake Jackson, TX (101 N Hwy 2004)",
+    "stateCode": "TX",
+    "lat": 29.063684,
+    "lng": -95.427458
+  },
+  {
+    "storeId": 3,
+    "storeNumber": "#3",
+    "name": "#3 Brazoria, TX",
+    "stateCode": "TX",
+    "lat": 29.054991,
+    "lng": -95.571808
+  },
+  {
+    "storeId": 7,
+    "storeNumber": "#7",
+    "name": "#7 Freeport, TX (4231 E Hwy 332)",
+    "stateCode": "TX",
+    "lat": 28.981319,
+    "lng": -95.336922
+  },
+  {
+    "storeId": 8,
+    "storeNumber": "#8",
+    "name": "#8 Freeport, TX (1002 N Brazosport)",
+    "stateCode": "TX",
+    "lat": 28.969481,
+    "lng": -95.370064
+  },
+  {
+    "storeId": 12,
+    "storeNumber": "#12",
+    "name": "#12 Port Lavaca, TX",
+    "stateCode": "TX",
+    "lat": 28.610184503035022,
+    "lng": -96.64905834373896
+  },
+  {
+    "storeId": 13,
+    "storeNumber": "#13",
+    "name": "#13 Angleton, TX (2299 E Mulberry)",
+    "stateCode": "TX",
+    "lat": 29.18483831856236,
+    "lng": -95.40882146694477
+  },
+  {
+    "storeId": 14,
+    "storeNumber": "#14",
+    "name": "#14 Alvin, TX",
+    "stateCode": "TX",
+    "lat": 29.42999,
+    "lng": -95.22636
+  },
+  {
+    "storeId": 16,
+    "storeNumber": "#16",
+    "name": "#16 Giddings, TX",
+    "stateCode": "TX",
+    "lat": 30.179893493296618,
+    "lng": -96.91380487438587
+  },
+  {
+    "storeId": 17,
+    "storeNumber": "#17",
+    "name": "#17 Luling, TX",
+    "stateCode": "TX",
+    "lat": 29.65125477349913,
+    "lng": -97.59250536090968
+  },
+  {
+    "storeId": 18,
+    "storeNumber": "#18",
+    "name": "#18 Waller, TX",
+    "stateCode": "TX",
+    "lat": 30.072109207623306,
+    "lng": -95.93175941857044
+  },
+  {
+    "storeId": 19,
+    "storeNumber": "#19",
+    "name": "#19 Pearland, TX (2541 S Main)",
+    "stateCode": "TX",
+    "lat": 29.560391603389707,
+    "lng": -95.28521302291408
+  },
+  {
+    "storeId": 20,
+    "storeNumber": "#20",
+    "name": "#20 Pearland, TX (11151 Shadow Creek)",
+    "stateCode": "TX",
+    "lat": 29.580705970167475,
+    "lng": -95.39180884291916
+  },
+  {
+    "storeId": 21,
+    "storeNumber": "#21",
+    "name": "#21 Angleton, TX (931 Loop 274)",
+    "stateCode": "TX",
+    "lat": 29.17310929015999,
+    "lng": -95.43370808790512
+  },
+  {
+    "storeId": 22,
+    "storeNumber": "#22",
+    "name": "#22 New Braunfels, TX",
+    "stateCode": "TX",
+    "lat": 29.72665,
+    "lng": -98.07872
+  },
+  {
+    "storeId": 23,
+    "storeNumber": "#23",
+    "name": "#23 League City, TX",
+    "stateCode": "TX",
+    "lat": 29.49856,
+    "lng": -95.056419
+  },
+  {
+    "storeId": 24,
+    "storeNumber": "#24",
+    "name": "#24 Eagle Lake, TX",
+    "stateCode": "TX",
+    "lat": 29.590167635825694,
+    "lng": -96.33213037500609
+  },
+  {
+    "storeId": 25,
+    "storeNumber": "#25",
+    "name": "#25 Angleton, TX (2304 W Mulberry)",
+    "stateCode": "TX",
+    "lat": 29.163737,
+    "lng": -95.45506
+  },
+  {
+    "storeId": 26,
+    "storeNumber": "#26",
+    "name": "#26 Madisonville, TX",
+    "stateCode": "TX",
+    "lat": 30.965689869754364,
+    "lng": -95.87995463203582
+  },
+  {
+    "storeId": 28,
+    "storeNumber": "#28",
+    "name": "#28 Bastrop, TX",
+    "stateCode": "TX",
+    "lat": 30.1071985192125,
+    "lng": -97.30589278033362
+  },
+  {
+    "storeId": 29,
+    "storeNumber": "#29",
+    "name": "#29 Lake Jackson, TX (598 Hwy 332)",
+    "stateCode": "TX",
+    "lat": 29.021351,
+    "lng": -95.436287
+  },
+  {
+    "storeId": 30,
+    "storeNumber": "#30",
+    "name": "#30 Wharton, TX",
+    "stateCode": "TX",
+    "lat": 29.325783915785962,
+    "lng": -96.12370377626388
+  },
+  {
+    "storeId": 31,
+    "storeNumber": "#31",
+    "name": "#31 Richmond, TX",
+    "stateCode": "TX",
+    "lat": 29.55239,
+    "lng": -95.69696
+  },
+  {
+    "storeId": 32,
+    "storeNumber": "#32",
+    "name": "#32 Cypress, TX",
+    "stateCode": "TX",
+    "lat": 29.98089,
+    "lng": -95.71822
+  },
+  {
+    "storeId": 33,
+    "storeNumber": "#33",
+    "name": "#33 Texas City, TX",
+    "stateCode": "TX",
+    "lat": 29.4289,
+    "lng": -95.06302
+  },
+  {
+    "storeId": 34,
+    "storeNumber": "#34",
+    "name": "#34 Baytown, TX",
+    "stateCode": "TX",
+    "lat": 29.800733,
+    "lng": -94.999937
+  },
+  {
+    "storeId": 35,
+    "storeNumber": "#35",
+    "name": "#35 Temple, TX",
+    "stateCode": "TX",
+    "lat": 31.136109,
+    "lng": -97.328584
+  },
+  {
+    "storeId": 36,
+    "storeNumber": "#36",
+    "name": "#36 Terrell, TX",
+    "stateCode": "TX",
+    "lat": 32.7166952284362,
+    "lng": -96.32113240314676
+  },
+  {
+    "storeId": 37,
+    "storeNumber": "#37",
+    "name": "#37 Fort Worth, TX",
+    "stateCode": "TX",
+    "lat": 33.024257,
+    "lng": -97.27835
+  },
+  {
+    "storeId": 38,
+    "storeNumber": "#38",
+    "name": "#38 Royse City, TX",
+    "stateCode": "TX",
+    "lat": 32.97919384768757,
+    "lng": -96.29530965787751
+  },
+  {
+    "storeId": 39,
+    "storeNumber": "#39",
+    "name": "#39 Denton, TX",
+    "stateCode": "TX",
+    "lat": 33.17933964700234,
+    "lng": -97.10253240039718
+  },
+  {
+    "storeId": 40,
+    "storeNumber": "#40",
+    "name": "#40 Katy, TX",
+    "stateCode": "TX",
+    "lat": 29.778698938223005,
+    "lng": -95.84754292948973
+  },
+  {
+    "storeId": 42,
+    "storeNumber": "#42",
+    "name": "#42 Loxley, AL",
+    "stateCode": "AL",
+    "lat": 30.634259243574256,
+    "lng": -87.67662407076841
+  },
+  {
+    "storeId": 43,
+    "storeNumber": "#43",
+    "name": "#43 Leeds, AL",
+    "stateCode": "AL",
+    "lat": 33.54455516266362,
+    "lng": -86.58623370092964
+  },
+  {
+    "storeId": 44,
+    "storeNumber": "#44",
+    "name": "#44 Melissa, TX",
+    "stateCode": "TX",
+    "lat": 33.27152890789773,
+    "lng": -96.59195577414206
+  },
+  {
+    "storeId": 45,
+    "storeNumber": "#45",
+    "name": "#45 Sevierville, TN",
+    "stateCode": "TN",
+    "lat": 35.98170520475965,
+    "lng": -83.60512220159048
+  },
+  {
+    "storeId": 46,
+    "storeNumber": "#46",
+    "name": "#46 Saint Augustine, FL",
+    "stateCode": "FL",
+    "lat": 29.98373,
+    "lng": -81.46405
+  },
+  {
+    "storeId": 47,
+    "storeNumber": "#47",
+    "name": "#47 Daytona Beach, FL",
+    "stateCode": "FL",
+    "lat": 29.2236,
+    "lng": -81.100906
+  },
+  {
+    "storeId": 48,
+    "storeNumber": "#48",
+    "name": "#48 Ennis, TX",
+    "stateCode": "TX",
+    "lat": 32.32337,
+    "lng": -96.60617
+  },
+  {
+    "storeId": 50,
+    "storeNumber": "#50",
+    "name": "#50 Crossville, TN",
+    "stateCode": "TN",
+    "lat": 35.98035,
+    "lng": -85.016
+  },
+  {
+    "storeId": 51,
+    "storeNumber": "#51",
+    "name": "#51 Warner Robins, GA",
+    "stateCode": "GA",
+    "lat": 32.58491032751326,
+    "lng": -83.74038703003782
+  },
+  {
+    "storeId": 52,
+    "storeNumber": "#52",
+    "name": "#52 Calhoun, GA",
+    "stateCode": "GA",
+    "lat": 34.44068395343019,
+    "lng": -84.91700573035921
+  },
+  {
+    "storeId": 53,
+    "storeNumber": "#53",
+    "name": "#53 Florence, SC",
+    "stateCode": "SC",
+    "lat": 34.27190548040222,
+    "lng": -79.70265251714343
+  },
+  {
+    "storeId": 55,
+    "storeNumber": "#55",
+    "name": "#55 Richmond, KY",
+    "stateCode": "KY",
+    "lat": 37.673291,
+    "lng": -84.308841
+  },
+  {
+    "storeId": 57,
+    "storeNumber": "#57",
+    "name": "#57 Athens, AL",
+    "stateCode": "AL",
+    "lat": 34.728548793213726,
+    "lng": -86.93212953009538
+  },
+  {
+    "storeId": 58,
+    "storeNumber": "#58",
+    "name": "#58 Auburn, AL",
+    "stateCode": "AL",
+    "lat": 32.552081060982694,
+    "lng": -85.52664872978087
+  }
+]

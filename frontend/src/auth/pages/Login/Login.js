@@ -3,11 +3,15 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useLogin } from "../../hooks/useLogin";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
-import { API_BASE } from "../../../config/api";
+import apiClient, { getErrorMessage } from "../../../config/apiClient";
+import { persistAuthSession } from "../../utils/authSession";
+import { useAuthContext } from "../../../shared/hooks/useAuthContext";
 
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
+  const [googleError, setGoogleError] = useState("");
   const { login, error } = useLogin();
+  const { dispatch } = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,28 +20,16 @@ const Login = () => {
 
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      console.log("API_BASE =", API_BASE);
-      const response = await fetch(`${API_BASE}/api/auth/google`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      setGoogleError("");
+
+      const { data: authPayload } = await apiClient.post("/api/auth/google", {
           credential: credentialResponse.credential,
-        }),
       });
 
-      const json = await response.json();
-
-      if (!response.ok) {
-        throw new Error(json.message || "Google login failed");
-      }
-
-      localStorage.setItem("user", JSON.stringify(json));
-      window.location.href = "/";
+      persistAuthSession(authPayload);
+      dispatch({ type: "LOGIN", payload: authPayload });
     } catch (err) {
-      console.error(err);
-      alert(err.message);
+      setGoogleError(getErrorMessage(err, "Google login failed"));
     }
   };
 
@@ -65,7 +57,9 @@ const Login = () => {
               required
               className={styles.input}
             />
-            {error && <div className={styles.error_msg}>{error}</div>}
+            {(error || googleError) && (
+              <div className={styles.error_msg}>{error || googleError}</div>
+            )}
             <button type="submit" className={styles.green_btn}>
               Sign In
             </button>
@@ -76,7 +70,7 @@ const Login = () => {
               <GoogleLogin
                 onSuccess={handleGoogleSuccess}
                 onError={() => {
-                  alert("Google login failed");
+                  setGoogleError("Google login failed");
                 }}
               />
             </div>

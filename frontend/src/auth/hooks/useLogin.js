@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { useAuthContext } from "../../shared/hooks/useAuthContext";
-import { API_BASE } from "../../config/api";
+import apiClient, { getErrorMessage } from "../../config/apiClient";
+import { persistAuthSession } from "../utils/authSession";
 
 export const useLogin = () => {
   const [error, setError] = useState("");
@@ -10,26 +12,18 @@ export const useLogin = () => {
   const navigate = useNavigate();
 
   const login = async (data) => {
-    setError("");
+    try {
+      setError("");
 
-    const response = await fetch(`${API_BASE}/api/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    const json = await response.json();
-    if (response.status && response.status >= 400 && response.status <= 500) {
-      setError(json.message);
-    }
-    if (response.status === 200) {
-      // store user in localStorage
-      localStorage.setItem("user", JSON.stringify(json));
+      const { data: authPayload } = await apiClient.post("/api/auth/login", data);
 
-      // update the auth context
-      dispatch({ type: "LOGIN", payload: json });
-
+      persistAuthSession(authPayload);
+      dispatch({ type: "LOGIN", payload: authPayload });
       navigate("/");
+    } catch (apiError) {
+      setError(getErrorMessage(apiError, "Login failed"));
     }
   };
+
   return { login, error };
 };

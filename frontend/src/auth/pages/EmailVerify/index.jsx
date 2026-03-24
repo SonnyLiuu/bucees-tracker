@@ -1,41 +1,61 @@
-import React, { useEffect, useState, Fragment } from "react";
-import { useParams, Link } from "react-router-dom";
-import axios from "axios";
+import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import apiClient from "../../../config/apiClient";
 import styles from "./styles.module.css";
 
 const EmailVerify = () => {
-	const [validUrl, setValidUrl] = useState(true);
-	const param = useParams();
+  const [status, setStatus] = useState("loading");
+  const params = useParams();
+  const hasRequestedRef = useRef(false);
 
-	useEffect(() => {
-		const verifyEmailUrl = async () => {
-			try {
-				const url = `/api/auth/register/${param.id}/verify/${param.token}`;
-				const { data } = await axios.get(url);
-				console.log(data);
-				setValidUrl(true);
-			} catch (error) {
-				console.log(error);
-				setValidUrl(false);
-			}
-		};
-		verifyEmailUrl();
-	}, [param]);
+  useEffect(() => {
+    if (hasRequestedRef.current) {
+      return;
+    }
 
-	return (
-		<Fragment>
-			{validUrl ? (
-				<div className={styles.container}>
-					<h1>Email verified successfully!</h1>
-					<Link to="/login">
-						<button className={styles.green_btn}>Log In</button>
-					</Link>
-				</div>
-			) : (
-				<h1>404 Not Found</h1>
-			)}
-		</Fragment>
-	);
+    hasRequestedRef.current = true;
+
+    const verifyEmailUrl = async () => {
+      try {
+        await apiClient.get(`/api/auth/register/${params.id}/verify/${params.token}`);
+        setStatus("success");
+      } catch (error) {
+        setStatus("error");
+      }
+    };
+
+    verifyEmailUrl();
+  }, [params.id, params.token]);
+
+  if (status === "loading") {
+    return (
+      <main className={styles.container}>
+        <div className={styles.card}>
+          <h1>Verifying email...</h1>
+        </div>
+      </main>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <main className={styles.container}>
+        <div className={styles.card}>
+          <h1>Verification link is invalid or expired.</h1>
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <main className={styles.container}>
+      <div className={styles.card}>
+        <h1>Verified successfully.</h1>
+        <p>You may close this tab now.</p>
+      </div>
+    </main>
+  );
 };
 
 export default EmailVerify;

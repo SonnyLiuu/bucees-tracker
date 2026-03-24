@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import apiClient, { getErrorMessage } from "../../../config/apiClient";
 import styles from "./styles.module.css";
 
 const ForgotPassword = () => {
@@ -11,19 +11,12 @@ const ForgotPassword = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "/api/auth/forgot";
-			const { data } = await axios.post(url, {"email": email});
+			const { data } = await apiClient.post("/api/auth/forgot", { email });
 			setError("");
 			setMsg(data.message);
 		} catch (error) {
-			if (
-				error.response &&
-				error.response.status >= 400 &&
-				error.response.status <= 500
-			) {
-				setMsg("");
-				setError(error.response.data.message);
-			}
+			setMsg("");
+			setError(getErrorMessage(error, "Unable to send reset email right now."));
 		}
 	};
 

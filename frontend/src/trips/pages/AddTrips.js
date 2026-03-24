@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 
 import Button from "../../shared/components/FormElements/Button";
+import { storeCatalog } from "../../shared/data/storeCatalog";
 import { useAddTrips } from "../hooks/useAddTrip";
-import { useAuthContext } from "../../shared/hooks/useAuthContext";
 
 import TripDatePicker from "../components/TripDatePicker";
 import "./AddTrips.css";
 
 const AddTrips = () => {
-  const { user } = useAuthContext();
-  const [showDatePicker, setShowDatePicker] = useState(false);
-
-  const [Trip, setTrip] = useState({
-    email: user.userData.email,
-    location: "#1 Lake Jackson, TX (899 Oyster Creek)",
+  const [trip, setTrip] = useState({
+    storeNumber: storeCatalog[0].storeNumber,
     date: "",
     total: "",
     didGas: false,
@@ -31,7 +27,7 @@ const AddTrips = () => {
 
   const tripSubmitHandler = async (e) => {
     e.preventDefault();
-    await addTrips(Trip);
+    await addTrips(trip);
   };
 
   const handleChange = (e) => {
@@ -42,100 +38,26 @@ const AddTrips = () => {
     }
   };
 
-  const handleDateChange = (date) => {
-    setTrip((prev) => ({ ...prev, date }));
-  };
-
   return (
     <React.Fragment>
       <form className="add-trip-form" onSubmit={tripSubmitHandler}>
         <div className="add-trip-grid">
           <div className="add-trip-grid__left">
             <div className="add-trip-location">
-              <label htmlFor="location">Choose a Location: </label>
+              <label htmlFor="storeNumber">Choose a Location: </label>
               <select
                 className="add-trip-location__select"
-                name="location"
+                id="storeNumber"
+                name="storeNumber"
                 onChange={handleChange}
-                value={Trip.location}
+                value={trip.storeNumber}
                 required
               >
-                <option value="#1 Lake Jackson, TX (899 Oyster Creek)">
-                  #1 Lake Jackson, TX (899 Oyster Creek)
-                </option>
-                <option value="#2 Lake Jackson, TX (101 N Hwy 2004)">
-                  #2 Lake Jackson, TX (101 N Hwy 2004)
-                </option>
-                <option value="#3 Brazoria, TX">#3 Brazoria, TX</option>
-                <option value="#7 Freeport, TX (4231 E Hwy 332)">
-                  #7 Freeport, TX (4231 E Hwy 332)
-                </option>
-                <option value="#8 Freeport, TX (1002 N Brazosport)">
-                  #8 Freeport, TX (1002 N Brazosport)
-                </option>
-                <option value="#12 Port Lavaca, TX">#12 Port Lavaca, TX</option>
-                <option value="#13 Angleton, TX (2299 E Mulberry)">
-                  #13 Angleton, TX (2299 E Mulberry)
-                </option>
-                <option value="#14 Alvin, TX">#14 Alvin, TX</option>
-                <option value="#16 Giddings, TX">#16 Giddings, TX</option>
-                <option value="#17 Luling, TX">#17 Luling, TX</option>
-                <option value="#18 Waller, TX">#18 Waller, TX</option>
-                <option value="#19 Pearland, TX (2541 S Main)">
-                  #19 Pearland, TX (2541 S Main)
-                </option>
-                <option value="#20 Pearland, TX (11151 Shadow Creek)">
-                  #20 Pearland, TX (11151 Shadow Creek)
-                </option>
-                <option value="#21 Angleton, TX (931 Loop 274)">
-                  #21 Angleton, TX (931 Loop 274)
-                </option>
-                <option value="#22 New Braunfels, TX">
-                  #22 New Braunfels, TX
-                </option>
-                <option value="#23 League City, TX">#23 League City, TX</option>
-                <option value="#24 Eagle Lake, TX">#24 Eagle Lake, TX</option>
-                <option value="#25 Angleton, TX (2304 W Mulberry)">
-                  #25 Angleton, TX (2304 W Mulberry)
-                </option>
-                <option value="#26 Madisonville, TX">
-                  #26 Madisonville, TX
-                </option>
-                <option value="#28 Bastrop, TX">#28 Bastrop, TX</option>
-                <option value="#29 Lake Jackson, TX (598 Hwy 332)">
-                  #29 Lake Jackson, TX (598 Hwy 332)
-                </option>
-                <option value="#30 Wharton, TX">#30 Wharton, TX</option>
-                <option value="#31 Richmond, TX">#31 Richmond, TX</option>
-                <option value="#32 Cypress, TX">#32 Cypress, TX</option>
-                <option value="#33 Texas City, TX">#33 Texas City, TX</option>
-                <option value="#34 Baytown, TX">#34 Baytown, TX</option>
-                <option value="#35 Temple, TX">#35 Temple, TX</option>
-                <option value="#36 Terrell, TX">#36 Terrell, TX</option>
-                <option value="#37 Fort Worth, TX">#37 Fort Worth, TX</option>
-                <option value="#38 Royse City, TX">#38 Royse City, TX</option>
-                <option value="#39 Denton, TX">#39 Denton, TX</option>
-                <option value="#40 Katy, TX">#40 Katy, TX</option>
-                <option value="#42 Loxley, AL">#42 Loxley, AL</option>
-                <option value="#43 Leeds, AL">#43 Leeds, AL</option>
-                <option value="#44 Melissa, TX">#44 Melissa, TX</option>
-                <option value="#45 Sevierville, TN">#45 Sevierville, TN</option>
-                <option value="#46 Saint Augustine, FL">
-                  #46 Saint Augustine, FL
-                </option>
-                <option value="#47 Daytona Beach, FL">
-                  #47 Daytona Beach, FL
-                </option>
-                <option value="#48 Ennis, TX">#48 Ennis, TX</option>
-                <option value="#50 Crossville, TN">#50 Crossville, TN</option>
-                <option value="#51 Warner Robins, GA">
-                  #51 Warner Robins, GA
-                </option>
-                <option value="#52 Calhoun, GA">#52 Calhoun, GA</option>
-                <option value="#53 Florence, SC">#53 Florence, SC</option>
-                <option value="#55 Richmond, KY">#55 Richmond, KY</option>
-                <option value="#57 Athens, AL">#57 Athens, AL</option>
-                <option value="#58 Auburn, AL">#58 Auburn, AL</option>
+                {storeCatalog.map((store) => (
+                  <option key={store.storeNumber} value={store.storeNumber}>
+                    {store.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -143,11 +65,11 @@ const AddTrips = () => {
               <label htmlFor="date">Enter Date:</label>
 
               <TripDatePicker
-                value={Trip.date}
+                value={trip.date}
                 onChange={(date) =>
                   setTrip((prev) => ({
                     ...prev,
-                    date: date,
+                    date,
                   }))
                 }
               />
@@ -161,7 +83,7 @@ const AddTrips = () => {
                 placeholder="Total"
                 name="total"
                 onChange={handleChange}
-                value={Trip.total}
+                value={trip.total}
                 required
               />
             </div>

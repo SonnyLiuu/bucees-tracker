@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import apiClient, { getErrorMessage } from "../../../config/apiClient";
 import styles from "./styles.module.css";
 
 const ResetPassword = () => {
@@ -16,20 +16,16 @@ const ResetPassword = () => {
     e.preventDefault();
 
     try {
-      const url = `/api/auth/${param.id}/reset/${param.token}`;
-      const { data } = await axios.patch(url, {"password": password});
+      const { data } = await apiClient.patch(
+        `/api/auth/${param.id}/reset/${param.token}`,
+        { password }
+      );
       setError("");
       setMsg(data.message);
       navigate("/login");
     } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setMsg("");
-        setError(error.response.data.message);
-      }
+      setMsg("");
+      setError(getErrorMessage(error, "Unable to reset password right now."));
     }
   };
 

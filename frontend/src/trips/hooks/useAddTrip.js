@@ -1,25 +1,25 @@
 import { useState } from "react";
-import { API_BASE } from "../../config/api";
+import { useAuthContext } from "../../shared/hooks/useAuthContext";
+import apiClient, { getAuthConfig, getErrorMessage } from "../../config/apiClient";
+import { emitTripsChanged } from "../utils/tripEvents";
 
 export const useAddTrips = () => {
   const [error, setError] = useState("");
   const [msg, setMsg] = useState("");
+  const { user } = useAuthContext();
 
   const addTrips = async (data) => {
-    setError(null);
+    try {
+      setError("");
+      setMsg("");
 
-    const response = await fetch(`${API_BASE}/api/trips/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    const json = await response.json();
-
-    if (response.status && response.status >= 400 && response.status <= 500) {
-      setError(json.message);
-    }
-    if (response.status === 200) {
-      setMsg(json.message);
+      const response = await apiClient.post("/api/trips", data, getAuthConfig(user));
+      setMsg(response.data.message);
+      emitTripsChanged();
+      return true;
+    } catch (error) {
+      setError(getErrorMessage(error, "Unable to save trip."));
+      return false;
     }
   };
 

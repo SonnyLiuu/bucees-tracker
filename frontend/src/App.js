@@ -10,9 +10,9 @@ import Login from "./auth/pages/Login/Login";
 import EmailVerify from "./auth/pages/EmailVerify";
 import ForgotPassword from "./auth/pages/ForgotPassword";
 import ResetPassword from "./auth/pages/ResetPassword";
+import LandingPage from "./marketing/pages/LandingPage";
 
 import Trips from "./trips/pages/Trips";
-import AddTrip from "./trips/pages/AddTrips";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import Stats from "./stats/pages/Stats";
 
@@ -24,24 +24,19 @@ const App = () => {
   const { user } = useAuthContext();
 
   return (
-    <>
+    <div className={user ? "app-shell app-shell--with-header" : "app-shell"}>
       <Router>
         {user && <MainNavigation />}
         <Routes>
           <Route
             path="/"
             exact
-            element={user ? <Stats /> : <Navigate to="/login" />}
+            element={user ? <Stats /> : <LandingPage />}
           />
           <Route
             path="/trips"
             exact
             element={user ? <Trips /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/add"
-            exact
-            element={user ? <AddTrip /> : <Navigate to="/" />}
           />
           <Route
             path="/signup"
@@ -61,7 +56,7 @@ const App = () => {
           />
         </Routes>
       </Router>
-    </>
+    </div>
   );
 };
 export default App;

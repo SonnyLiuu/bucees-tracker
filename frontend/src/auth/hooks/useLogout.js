@@ -1,16 +1,13 @@
-import { useAuthContext } from "../../shared/hooks/useAuthContext"
+import { clearAuthSession } from "../utils/authSession";
+import { useAuthContext } from "../../shared/hooks/useAuthContext";
 
 export const useLogout = () => {
-  const { dispatch } = useAuthContext()
-  
+  const { dispatch } = useAuthContext();
+
   const logout = () => {
-    localStorage.removeItem("user")
+    clearAuthSession();
+    dispatch({ type: "LOGOUT" });
+  };
 
-    // dispatch logout action
-    dispatch({type: "LOGOUT" })
-
-
-  }
-
-  return {logout}
-}
+  return { logout };
+};

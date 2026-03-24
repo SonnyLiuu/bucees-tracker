@@ -1,39 +1,41 @@
 const nodemailer = require("nodemailer");
+const env = require("../config/env");
 
-module.exports = async (email, subject, text) => {
+const buildMessageText = (text, actionUrl) =>
+  [text, actionUrl].filter(Boolean).join("\n\n");
+
+module.exports = async (email, subject, text, actionUrl) => {
   try {
     if (!email) {
       throw new Error("No recipient email specified");
     }
 
-    if (process.env.NODE_ENV !== "production") {
-      console.log("\n===DEV EMAIL BYPASS===");
-      console.log("To: ", email);
-      console.log("Subject: ", subject);
-      console.log("Body: ", text);
-      console.log("======================\n");
+    // Dev mode: print instead of send
+    if (!env.isProduction) {
+      console.log("\n=== DEV EMAIL BYPASS ===");
+      console.log("To:", email);
+      console.log("Subject:", subject);
+      console.log("Body:", buildMessageText(text, actionUrl));
+      console.log("========================\n");
       return;
     }
 
     const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      service: process.env.EMAIL_SERVICE,
-      port: Number(process.env.EMAIL_PORT),
-      secure: process.env.EMAIL_SECURE === "true",
+      service: env.emailService,
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: env.emailUser,
+        pass: env.emailPass,
       },
     });
 
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: `"Bucee's Tracker" <${env.emailUser}>`,
       to: email,
-      subject: subject,
-      text: text,
+      subject,
+      text: buildMessageText(text, actionUrl),
     });
 
-    console.log("Email sent Successfully");
+    console.log("Email sent successfully");
   } catch (error) {
     console.log("Email not sent");
     console.log(error);

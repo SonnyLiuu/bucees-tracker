@@ -1,21 +1,13 @@
-const { Trip } = require('../models/tripModel');
-const { User } = require("../models/userModel");
-const { Coordinates } = require("../models/coordinatesModel");
 const express = require("express");
+
+const asyncHandler = require("../middleware/asyncHandler");
+const requireAuth = require("../middleware/requireAuth");
+const { getCurrentUser } = require("../controllers/userController");
 
 const router = express.Router();
 
-// gets user data
- router.get("/:email", async (req, res) => {
-try {
-  const userData = await User.findOne({email: req.params.email});
+router.use(requireAuth);
 
-  res.status(200).json({ userData: userData, message: "Login Successful!"})
-    
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({message: "Internal Server Error"})
-  }
-})
+router.get("/me", asyncHandler(getCurrentUser));
 
 module.exports = router;

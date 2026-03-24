@@ -1,4 +1,3 @@
-export const API_BASE =
-  process.env.NODE_ENV === "production"
-    ? "https://bucees-tracker.onrender.com"
-    : "http://localhost:3001";
+import { CLIENT_ENV } from "./env";
+
+export const API_BASE = CLIENT_ENV.apiBase;

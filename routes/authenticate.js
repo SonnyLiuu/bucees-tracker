@@ -1,4 +1,6 @@
 const express = require("express");
+
+const asyncHandler = require("../middleware/asyncHandler");
 const {
   forgotAuth,
   loginAuth,
@@ -10,21 +12,11 @@ const {
 
 const router = express.Router();
 
-router.post("/google", googleLogin);
-
-// POST a registration
-router.post("/register", registerAuth);
-
-// Verify a email
-router.get("/register/:id/verify/:token", emailVerify);
-
-// POST a login
-router.post("/login", loginAuth);
-
-// POST a email
-router.post("/forgot", forgotAuth);
-
-// UPDATE a new password
-router.patch("/:id/reset/:token", updatePasswordAuth);
+router.post("/google", asyncHandler(googleLogin));
+router.post("/register", asyncHandler(registerAuth));
+router.get("/register/:id/verify/:token", asyncHandler(emailVerify));
+router.post("/login", asyncHandler(loginAuth));
+router.post("/forgot", asyncHandler(forgotAuth));
+router.patch("/:id/reset/:token", asyncHandler(updatePasswordAuth));
 
 module.exports = router;

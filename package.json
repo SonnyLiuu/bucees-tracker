@@ -5,11 +5,18 @@
     "node": "24.x"
   },
   "scripts": {
-    "start": "nodemon server.js",
-    "frontend": "cd frontend && npm start",
-    "backend": "nodemon server.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run backend\" \"npm run frontend\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+    "start": "node server.js",
+    "dev:server": "nodemon server.js",
+    "dev:client": "npm --prefix frontend start",
+    "frontend": "npm run dev:client",
+    "backend": "npm run dev:server",
+    "dev": "concurrently --kill-others-on-fail \"npm run dev:server\" \"npm run dev:client\"",
+    "lint": "npm run lint --prefix frontend",
+    "test": "npm run test:ci --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -21,8 +28,11 @@
     "joi-password-complexity": "^5.2.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^7.3.3",
-    "nodemailer": "^6.9.3",
-    "nodemon": "^3.0.1",
-    "path": "^0.12.7"
+    "nodemailer": "^6.9.3"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.1"
   }
 }

@@ -15,13 +15,9 @@
     padding: 0 0rem;
     z-index: 5;
   }
-  
-  main {
-    margin-top: var(--header-height);
+
+@media (min-width: 768px) {
+  .main-header {
+    justify-content: space-between;
   }
-  
-  @media (min-width: 768px) {
-    .main-header {
-      justify-content: space-between;
-    }
-  }
+}

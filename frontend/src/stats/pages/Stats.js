@@ -3,76 +3,52 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useAuthContext } from "../../shared/hooks/useAuthContext";
 import MapOverview from "../../map/pages/MapOverview";
 import Card from "../../shared/components/UIElements/Card";
+import apiClient, { getAuthConfig } from "../../config/apiClient";
+import { subscribeToTripsChanged } from "../../trips/utils/tripEvents";
 
 import "./Stats.css";
 
-import { API_BASE } from "../../config/api";
-
-const locationFields = [
-  { name: "Alabama", prefix: "al", total: 4 },
-  { name: "Florida", prefix: "fl", total: 2 },
-  { name: "Georgia", prefix: "ga", total: 2 },
-  { name: "Kentucky", prefix: "ky", total: 1 },
-  { name: "South Carolina", prefix: "sc", total: 1 },
-  { name: "Tennessee", prefix: "tn", total: 2 },
-  { name: "Texas", prefix: "tx", total: 34 },
-];
-
-const productFields = [
-  ["Gas", "total_gas"],
-  ["Brisket", "total_brisket"],
-  ["Dessert", "total_dessert"],
-  ["Jerky", "total_jerky"],
-  ["Outdoor", "total_outdoor"],
-  ["3rd Party Items", "total_3rdparty"],
-  ["Hot Grab n' Go", "total_hotgrab"],
-  ["Cold Grab n' Go", "total_coldgrab"],
-];
-
 const formatMoney = (value) => Number.parseFloat(value || 0).toFixed(2);
 
-const StatsMapCard = ({ userData, trips }) => {
+const StatsMapCard = ({ trips }) => {
   return (
     <section className="stats-page__grid-left" aria-label="Map overview">
       <Card className="stats-page__map-card">
         <div className="stats-page__map-shell">
-          <MapOverview
-            userData={userData}
-            Trips={trips}
-            className="stats-page__map-view"
-          />
+          <MapOverview Trips={trips} className="stats-page__map-view" />
         </div>
       </Card>
     </section>
   );
 };
 
-const StatsOverviewCard = ({ userData }) => {
+const StatsOverviewCard = ({ analytics }) => {
+  const overview = analytics?.overview;
   const overviewItems = [
     {
       label: "Total Trips",
-      value: userData?.total_trips ?? 0,
+      value: overview?.totalTrips ?? 0,
     },
     {
       label: "Total Spent",
-      value: `$${formatMoney(userData?.total_spent)}`,
+      value: `$${formatMoney(overview?.totalSpent)}`,
     },
     {
       label: "Most Popular Location",
-      value: userData?.most_visited_location || "None yet!",
-      subtext: `${userData?.most_visited_location_trips ?? 0} trips`,
+      value: overview?.mostVisitedLocation?.location || "None yet!",
+      subtext: `${overview?.mostVisitedLocation?.trips ?? 0} trips`,
     },
     {
       label: "Highest-Spent Location",
-      value: userData?.most_spent_location || "None yet!",
-      subtext: `$${formatMoney(userData?.most_spent_location_spent)} in ${
-        userData?.most_spent_location_trips ?? 0
+      value: overview?.mostSpentLocation?.location || "None yet!",
+      subtext: `$${formatMoney(overview?.mostSpentLocation?.spent)} in ${
+        overview?.mostSpentLocation?.trips ?? 0
       } trips`,
     },
     {
       label: "Most Popular Item",
-      value: userData?.most_item_category || "None yet!",
-      subtext: `${userData?.most_item_category_count ?? 0} trips`,
+      value: overview?.mostItemCategory?.category || "None yet!",
+      subtext: `${overview?.mostItemCategory?.count ?? 0} trips`,
     },
   ];
 
@@ -97,7 +73,7 @@ const StatsOverviewCard = ({ userData }) => {
   );
 };
 
-const StatsStateBreakdownCard = ({ stateStats, userData }) => {
+const StatsStateBreakdownCard = ({ stateStats, analytics }) => {
   return (
     <section className="stats-page__grid-left" aria-label="State breakdown">
       <Card className="stats-page__state-card">
@@ -112,10 +88,10 @@ const StatsStateBreakdownCard = ({ stateStats, userData }) => {
           </div>
 
           {stateStats.map((state) => (
-            <div key={state.prefix} className="stats-page__state-table-row">
+            <div key={state.stateCode} className="stats-page__state-table-row">
               <span>{state.name}</span>
               <span>
-                {state.unique}/{state.total}
+                {state.visitedLocations}/{state.totalLocations}
               </span>
               <span>{state.trips}</span>
               <span>${formatMoney(state.spent)}</span>
@@ -124,8 +100,8 @@ const StatsStateBreakdownCard = ({ stateStats, userData }) => {
         </div>
 
         <div className="stats-page__state-total">
-          Grand Total: ${formatMoney(userData?.total_spent)} in{" "}
-          {userData?.total_trips ?? 0} trips
+          Grand Total: ${formatMoney(analytics?.overview?.totalSpent)} in{" "}
+          {analytics?.overview?.totalTrips ?? 0} trips
         </div>
       </Card>
     </section>
@@ -142,7 +118,7 @@ const StatsProductTotalsCard = ({ productStats }) => {
           {productStats.map((item) => (
             <div key={item.key} className="stats-page__product-item">
               <dt className="stats-page__product-label">{item.label}</dt>
-              <dd className="stats-page__product-value">{item.value}</dd>
+              <dd className="stats-page__product-value">{item.count}</dd>
             </div>
           ))}
         </dl>
@@ -152,70 +128,44 @@ const StatsProductTotalsCard = ({ productStats }) => {
 };
 
 const Stats = () => {
-  const [userData, setUserData] = useState(null);
+  const [analytics, setAnalytics] = useState(null);
   const [trips, setTrips] = useState([]);
   const { user } = useAuthContext();
 
   useEffect(() => {
-    const email = user?.userData?.email;
-    if (!email) return;
+    if (!user?.token) return;
 
     const fetchData = async () => {
       try {
         const [userRes, tripsRes] = await Promise.all([
-          fetch(`${API_BASE}/api/user/${email}`),
-          fetch(`${API_BASE}/api/trips/${email}`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          }),
+          apiClient.get("/api/user/me", getAuthConfig(user)),
+          apiClient.get("/api/trips", getAuthConfig(user)),
         ]);
 
-        const userJson = await userRes.json();
-        const tripsJson = await tripsRes.json();
-
-        if (userRes.ok) {
-          setUserData(userJson.userData);
-        }
-
-        if (tripsRes.ok) {
-          setTrips(tripsJson.data || []);
-        }
+        setAnalytics(userRes.data.analytics || null);
+        setTrips(tripsRes.data.data || []);
       } catch (err) {
         console.error("Failed to fetch stats data:", err);
       }
     };
 
     fetchData();
+
+    return subscribeToTripsChanged(fetchData);
   }, [user]);
 
-  const stateStats = useMemo(() => {
-    return locationFields.map(({ name, prefix, total }) => ({
-      name,
-      prefix,
-      total,
-      unique: userData?.[`${prefix}_unique`] ?? 0,
-      trips: userData?.[`${prefix}_trips`] ?? 0,
-      spent: userData?.[`${prefix}_total`] ?? 0,
-    }));
-  }, [userData]);
-
-  const productStats = useMemo(() => {
-    return productFields.map(([label, key]) => ({
-      label,
-      key,
-      value: userData?.[key] ?? 0,
-    }));
-  }, [userData]);
+  const stateStats = useMemo(() => analytics?.states || [], [analytics]);
+  const productStats = useMemo(() => analytics?.categories || [], [analytics]);
 
   return (
     <main className="stats-page">
       <section className="stats-page__grid stats-page__grid--top">
-        <StatsMapCard userData={userData} trips={trips} />
-        <StatsOverviewCard userData={userData} />
+        <StatsMapCard trips={trips} />
+        <StatsOverviewCard analytics={analytics} />
       </section>
 
       <section className="stats-page__grid stats-page__grid--bottom">
-        <StatsStateBreakdownCard stateStats={stateStats} userData={userData} />
+        <StatsStateBreakdownCard stateStats={stateStats} analytics={analytics} />
         <StatsProductTotalsCard productStats={productStats} />
       </section>
     </main>

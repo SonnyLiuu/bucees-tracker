@@ -7,6 +7,25 @@ import TripMap from "../../trips/components/TripMap";
 
 import "./TripItem.css";
 
+const formatTripDate = (value) => {
+  if (!value) {
+    return "Unknown date";
+  }
+
+  const parsedDate = new Date(value);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(parsedDate);
+};
+
 const TripItem = (props) => {
   const [showMap, setShowMap] = useState(false);
 
@@ -77,7 +96,7 @@ const TripItem = (props) => {
           <Card className="trip-item__content">
             <div className="trip-item__info">
               <h2>
-                {props.date}: {props.location}
+                {formatTripDate(props.date)}: {props.location}
               </h2>
               <h3>Total: ${props.total}</h3>
               <h4>Items Purchased: {itemsFound.toString()}</h4>

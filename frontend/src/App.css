@@ -28,6 +28,10 @@
   color: #61dafb;
 }
 
+.app-shell--with-header main {
+  margin-top: var(--header-height);
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
