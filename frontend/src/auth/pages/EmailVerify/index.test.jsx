@@ -1,19 +1,20 @@
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import EmailVerify from "./index";
 import apiClient from "../../../config/apiClient";
 
-jest.mock("../../../config/apiClient", () => ({
+vi.mock("../../../config/apiClient", () => ({
   __esModule: true,
   default: {
-    get: jest.fn(),
+    get: vi.fn(),
   },
 }));
 
 describe("EmailVerify", () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   const renderPage = () =>

@@ -1,10 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 
 import AuthModeToggle from "./AuthModeToggle";
 
 describe("AuthModeToggle", () => {
   it("marks the active mode as selected", () => {
-    const onModeChange = jest.fn();
+    const onModeChange = vi.fn();
 
     render(<AuthModeToggle mode="login" onModeChange={onModeChange} />);
 
@@ -19,7 +20,7 @@ describe("AuthModeToggle", () => {
   });
 
   it("supports arrow key navigation between modes", () => {
-    const onModeChange = jest.fn();
+    const onModeChange = vi.fn();
 
     render(<AuthModeToggle mode="login" onModeChange={onModeChange} />);
 

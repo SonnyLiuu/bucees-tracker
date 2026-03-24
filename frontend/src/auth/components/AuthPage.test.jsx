@@ -1,16 +1,19 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import AuthPage from "./AuthPage";
 
-const mockNavigate = jest.fn();
+const mockNavigate = vi.fn();
 
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
+vi.mock("react-router-dom", async () => ({
+  ...(await vi.importActual("react-router-dom")),
   useNavigate: () => mockNavigate,
 }));
 
-jest.mock("./LoginForm", () => () => <div>login form content</div>);
-jest.mock("./SignupForm", () => () => <div>signup form content</div>);
+vi.mock("./LoginForm", () => ({ default: () => <div>login form content</div> }));
+vi.mock("./SignupForm", () => ({
+  default: () => <div>signup form content</div>,
+}));
 
 describe("AuthPage", () => {
   beforeEach(() => {

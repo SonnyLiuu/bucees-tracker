@@ -14,26 +14,25 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.2",
-    "react-scripts": "^5.0.1",
     "react-transition-group": "^4.4.5",
+    "vite": "^7.1.7",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "cross-env": "^10.1.0"
+    "@vitejs/plugin-react": "^5.0.4",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.5",
+    "jsdom": "^26.1.0",
+    "vitest": "^3.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "lint": "eslint \"src/**/*.{js,jsx}\"",
-    "test": "react-scripts test --watch",
-    "test:ci": "cross-env CI=true react-scripts test --watchAll=false --runInBand --passWithNoTests",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "start": "node ./node_modules/vite/bin/vite.js",
+    "dev": "node ./node_modules/vite/bin/vite.js",
+    "build": "node ./node_modules/vite/bin/vite.js build",
+    "preview": "node ./node_modules/vite/bin/vite.js preview",
+    "lint": "node ./node_modules/eslint/bin/eslint.js \"src/**/*.{js,jsx}\"",
+    "test": "node ./node_modules/vitest/vitest.mjs",
+    "test:ci": "node ./node_modules/vitest/vitest.mjs run --passWithNoTests"
   },
   "browserslist": {
     "production": [

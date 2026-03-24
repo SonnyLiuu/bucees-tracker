@@ -1,8 +1,8 @@
 const requiredClientEnvKeys =
-  process.env.NODE_ENV === "test" ? [] : ["REACT_APP_GOOGLE_CLIENT_ID"];
+  import.meta.env.MODE === "test" ? [] : ["VITE_GOOGLE_CLIENT_ID"];
 
 const missingClientEnvKeys = requiredClientEnvKeys.filter(
-  (key) => !process.env[key]
+  (key) => !import.meta.env[key]
 );
 
 if (missingClientEnvKeys.length > 0) {
@@ -15,13 +15,10 @@ if (missingClientEnvKeys.length > 0) {
 
 const trimTrailingSlash = (value) => value.replace(/\/+$/, "");
 
-const defaultApiBase =
-  process.env.NODE_ENV === "production"
-    ? "https://bucees-tracker.onrender.com"
-    : "http://localhost:3001";
+const defaultApiBase = "";
 
 export const CLIENT_ENV = Object.freeze({
-  apiBase: trimTrailingSlash(process.env.REACT_APP_API_BASE || defaultApiBase),
-  googleClientId: process.env.REACT_APP_GOOGLE_CLIENT_ID || "",
-  googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "",
+  apiBase: trimTrailingSlash(import.meta.env.VITE_API_BASE || defaultApiBase),
+  googleClientId: import.meta.env.VITE_GOOGLE_CLIENT_ID || "",
+  googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "",
 });

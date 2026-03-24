@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import LoginForm from "./LoginForm";
 import apiClient from "../../config/apiClient";
@@ -7,7 +8,7 @@ import { useAuthContext } from "../../shared/hooks/useAuthContext";
 import { useLogin } from "../hooks/useLogin";
 import { persistAuthSession } from "../utils/authSession";
 
-jest.mock("@react-oauth/google", () => ({
+vi.mock("@react-oauth/google", () => ({
   GoogleLogin: ({ onError, onSuccess }) => (
     <div>
       <button onClick={() => onSuccess({ credential: "google-token" })} type="button">
@@ -20,29 +21,29 @@ jest.mock("@react-oauth/google", () => ({
   ),
 }));
 
-jest.mock("../../config/apiClient", () => ({
+vi.mock("../../config/apiClient", () => ({
   __esModule: true,
   default: {
-    post: jest.fn(),
+    post: vi.fn(),
   },
-  getErrorMessage: jest.fn((error, fallbackMessage) => fallbackMessage),
+  getErrorMessage: vi.fn((error, fallbackMessage) => fallbackMessage),
 }));
 
-jest.mock("../../shared/hooks/useAuthContext", () => ({
-  useAuthContext: jest.fn(),
+vi.mock("../../shared/hooks/useAuthContext", () => ({
+  useAuthContext: vi.fn(),
 }));
 
-jest.mock("../hooks/useLogin", () => ({
-  useLogin: jest.fn(),
+vi.mock("../hooks/useLogin", () => ({
+  useLogin: vi.fn(),
 }));
 
-jest.mock("../utils/authSession", () => ({
-  persistAuthSession: jest.fn(),
+vi.mock("../utils/authSession", () => ({
+  persistAuthSession: vi.fn(),
 }));
 
 describe("LoginForm", () => {
-  const dispatch = jest.fn();
-  const login = jest.fn();
+  const dispatch = vi.fn();
+  const login = vi.fn();
 
   const renderForm = () =>
     render(

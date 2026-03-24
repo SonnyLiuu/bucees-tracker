@@ -8,7 +8,7 @@ import "./MainNavigation.css";
 
 import logo from "../../images/bucees-logo.png";
 
-const MainNavigation = (props) => {
+const MainNavigation = () => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
   const openDrawerHandler = () => {

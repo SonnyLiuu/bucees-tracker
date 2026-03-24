@@ -4,7 +4,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 
 import "./NavLinks.css";
 
-const NavLinks = (props) => {
+const NavLinks = () => {
   const { user } = useAuthContext();
 
   const { logout } = useLogout();

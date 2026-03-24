@@ -1,10 +1,11 @@
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 
 import AddTrips from "./AddTrips";
 
-jest.mock("../hooks/useAddTrip", () => ({
+vi.mock("../hooks/useAddTrip", () => ({
   useAddTrips: () => ({
-    addTrips: jest.fn(),
+    addTrips: vi.fn(),
     error: "",
     msg: "",
   }),

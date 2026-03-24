@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
+import { loadGoogleMapsApi } from "../../shared/util/googleMapsLoader";
 import "./TripMap.css";
 
 const TripMap = ({ latitude, longitude }) => {
@@ -9,21 +10,33 @@ const TripMap = ({ latitude, longitude }) => {
     "https://cdn.discordapp.com/attachments/1125893813727154317/1133105429543669820/colorlogo.png";
 
   useEffect(() => {
-    if (!window.google?.maps || !mapRef.current) {
-      return;
-    }
+    let isCancelled = false;
 
-    const mapOptions = {
-      center: { lat: latitude, lng: longitude },
-      zoom: 16,
+    const initializeMap = async () => {
+      const isLoaded = await loadGoogleMapsApi().catch(() => false);
+
+      if (isCancelled || !isLoaded || !mapRef.current) {
+        return;
+      }
+
+      const mapOptions = {
+        center: { lat: latitude, lng: longitude },
+        zoom: 16,
+      };
+
+      const map = new window.google.maps.Map(mapRef.current, mapOptions);
+      new window.google.maps.Marker({
+        position: { lat: latitude, lng: longitude },
+        map,
+        icon: colorlogo,
+      });
     };
 
-    const map = new window.google.maps.Map(mapRef.current, mapOptions);
-    new window.google.maps.Marker({
-      position: { lat: latitude, lng: longitude },
-      map,
-      icon: colorlogo,
-    });
+    initializeMap();
+
+    return () => {
+      isCancelled = true;
+    };
   }, [latitude, longitude]);
 
   return (

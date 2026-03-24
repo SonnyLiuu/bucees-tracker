@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef } from "react";
 
 import { storeCatalog } from "../../data/storeCatalog";
+import { loadGoogleMapsApi } from "../../util/googleMapsLoader";
 import "./Map.css";
 
 const colorLogo = "https://i.imghippo.com/files/kiSr21726623849.png";
@@ -23,45 +24,57 @@ const Map = ({
   );
 
   useEffect(() => {
-    if (!window.google?.maps || !mapRef.current) {
-      return;
-    }
+    let isCancelled = false;
 
-    const map = new window.google.maps.Map(mapRef.current, {
-      center: { lat: latitude, lng: longitude },
-      zoom,
-    });
+    const initializeMap = async () => {
+      const isLoaded = await loadGoogleMapsApi().catch(() => false);
 
-    if (multipleMarkers) {
-      for (const store of storeCatalog) {
-        const isVisited = visitedLocations.has(store.name);
-
-        new window.google.maps.Marker({
-          position: { lat: store.lat, lng: store.lng },
-          map,
-          title: store.name,
-          icon: {
-            url: isVisited ? colorLogo : grayLogo,
-            scaledSize: new window.google.maps.Size(30, 30),
-          },
-        });
+      if (isCancelled || !isLoaded || !mapRef.current) {
+        return;
       }
 
-      return;
-    }
+      const map = new window.google.maps.Map(mapRef.current, {
+        center: { lat: latitude, lng: longitude },
+        zoom,
+      });
 
-    if (typeof latitude !== "number" || typeof longitude !== "number") {
-      return;
-    }
+      if (multipleMarkers) {
+        for (const store of storeCatalog) {
+          const isVisited = visitedLocations.has(store.name);
 
-    new window.google.maps.Marker({
-      position: { lat: latitude, lng: longitude },
-      map,
-      icon: {
-        url: colorLogo,
-        scaledSize: new window.google.maps.Size(30, 30),
-      },
-    });
+          new window.google.maps.Marker({
+            position: { lat: store.lat, lng: store.lng },
+            map,
+            title: store.name,
+            icon: {
+              url: isVisited ? colorLogo : grayLogo,
+              scaledSize: new window.google.maps.Size(30, 30),
+            },
+          });
+        }
+
+        return;
+      }
+
+      if (typeof latitude !== "number" || typeof longitude !== "number") {
+        return;
+      }
+
+      new window.google.maps.Marker({
+        position: { lat: latitude, lng: longitude },
+        map,
+        icon: {
+          url: colorLogo,
+          scaledSize: new window.google.maps.Size(30, 30),
+        },
+      });
+    };
+
+    initializeMap();
+
+    return () => {
+      isCancelled = true;
+    };
   }, [latitude, longitude, multipleMarkers, visitedLocations, zoom]);
 
   return (

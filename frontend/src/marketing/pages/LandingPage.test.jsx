@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import LandingPage from "./LandingPage";
 
@@ -8,8 +9,8 @@ const intersectionObservers = [];
 class MockIntersectionObserver {
   constructor(callback) {
     this.callback = callback;
-    this.observe = jest.fn();
-    this.disconnect = jest.fn();
+    this.observe = vi.fn();
+    this.disconnect = vi.fn();
     intersectionObservers.push(this);
   }
 }
@@ -48,8 +49,8 @@ describe("LandingPage", () => {
 
   beforeEach(() => {
     intersectionObservers.length = 0;
-    scrollIntoViewMock = jest.fn();
-    scrollToMock = jest.fn();
+    scrollIntoViewMock = vi.fn();
+    scrollToMock = vi.fn();
     Object.defineProperty(window, "scrollY", {
       configurable: true,
       writable: true,

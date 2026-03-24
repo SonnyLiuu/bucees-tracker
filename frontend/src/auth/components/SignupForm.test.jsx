@@ -1,14 +1,15 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import SignupForm from "./SignupForm";
 import { useSignup } from "../hooks/useSignup";
 
-jest.mock("../hooks/useSignup", () => ({
-  useSignup: jest.fn(),
+vi.mock("../hooks/useSignup", () => ({
+  useSignup: vi.fn(),
 }));
 
 describe("SignupForm", () => {
-  const signup = jest.fn();
+  const signup = vi.fn();
 
   beforeEach(() => {
     signup.mockClear();
