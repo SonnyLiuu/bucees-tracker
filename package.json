@@ -15,8 +15,7 @@
     "test": "npm run test:ci --prefix frontend",
     "build": "npm run build --prefix frontend",
     "format:check": "prettier --check .",
-    "format:write": "prettier --write .",
-    "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend"
+    "format:write": "prettier --write ."
   },
   "dependencies": {
     "bcrypt": "^5.1.0",

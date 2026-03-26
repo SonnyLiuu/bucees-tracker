@@ -1,4 +1,3 @@
-const path = require("path");
 const express = require("express");
 const cors = require("cors");
 
@@ -59,14 +58,6 @@ app.use(express.json());
 app.use("/api/auth", authenticateRoutes);
 app.use("/api/trips", tripRoutes);
 app.use("/api/user", userRoutes);
-
-if (env.isProduction) {
-  app.use(express.static(path.join(__dirname, "frontend/dist")));
-
-  app.get(/^\/(?!api).*/, (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-  });
-}
 
 app.use(notFoundHandler);
 app.use(errorHandler);
